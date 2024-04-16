@@ -270,7 +270,7 @@ func (vr *vulkanRenderer) selectPhysicalDevice() error {
 			// ensure the device can present an image
 			canPresent, err := vk.GetPhysicalDeviceSurfaceSupportKHR(d, uint32(i), vr.surface)
 			if err != nil {
-				return fmt.Errorf("vk.GetPhysicalDeviceSurfaceSupportKHR:")
+				return fmt.Errorf("vk.GetPhysicalDeviceSurfaceSupportKHR:", err)
 			}
 			if canPresent {
 				presentQIndex = i

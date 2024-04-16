@@ -16,7 +16,7 @@ import (
 // The last few runs showed around 3ns
 func Benchmark64to32(b *testing.B) {
 	m32 := &m4{}
-	m64 := &lin.M4{11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44}
+	m64 := &lin.M4{Xx: 11, Xy: 12, Xz: 13, Xw: 14, Yx: 21, Yy: 22, Yz: 23, Yw: 24, Zx: 31, Zy: 32, Zz: 33, Zw: 34, Wx: 41, Wy: 42, Wz: 43, Ww: 44}
 	for cnt := 0; cnt < b.N; cnt++ {
 		m32.set64(m64)
 	}

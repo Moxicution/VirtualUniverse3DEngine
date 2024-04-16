@@ -17,6 +17,7 @@ import (
 func vv() {
 	fmt.Printf("eg.vv checks that a vulkan instance can be created.\n")
 	ver, err := vk.EnumerateInstanceVersion()
+
 	if err != nil {
 		slog.Error("vk.EnumerateInstanceVersion() failed", "err", err.Error())
 		return
@@ -38,8 +39,16 @@ func vv() {
 		slog.Error("vk.CreateInstance failed", "err", err.Error())
 		return
 	}
+
+	devices, err := vk.EnumeratePhysicalDevices(instance)
+	if err != nil {
+		slog.Error("vk.PhysicalDevice failed", "err", err.Error())
+	}
+
 	defer vk.DestroyInstance(instance, nil)
 	slog.Info("vulkan started", "instance", instance)
+	fmt.Println([]any{devices[0]}...)
+	slog.Info("Devices")
 	slog.Info("vulkan shutdown")
 }
 

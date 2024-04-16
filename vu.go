@@ -51,7 +51,9 @@ func NewEngine(config ...Attr) (eng *Engine, err error) {
 
 	// initialize the device layer needed by the renderer
 	eng.dev = device.New(cfg.windowed, cfg.title, cfg.x, cfg.y, cfg.w, cfg.h)
-	if err = eng.dev.CreateDisplay(); err != nil {
+	err = eng.dev.CreateDisplay()
+
+	if err != nil {
 		eng.dispose() // can't continue without a display.
 		return nil, fmt.Errorf("device.CreateDisplay failed %w", err)
 	}

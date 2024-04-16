@@ -25,25 +25,25 @@ func TestConvexHull(t *testing.T) {
 // This means translate*rotate*scale
 func TestMatrixOrder(t *testing.T) {
 	scale := &lin.M4{
-		5.0, 0.0, 0.0, 0.0,
-		0.0, 5.0, 0.0, 0.0,
-		0.0, 0.0, 5.0, 0.0,
-		0.0, 0.0, 0.0, 1.0}
+		Xx: 5.0, Xy: 0.0, Xz: 0.0, Xw: 0.0,
+		Yx: 0.0, Yy: 5.0, Yz: 0.0, Yw: 0.0,
+		Zx: 0.0, Zy: 0.0, Zz: 5.0, Zw: 0.0,
+		Wx: 0.0, Wy: 0.0, Wz: 0.0, Ww: 1.0}
 	q := lin.NewQ().SetAa(0, 1, 0, lin.Rad(90)) // rotate 90 around Y
 	rotate := lin.NewM4().SetQ(q)
 	translate := &lin.M4{
-		1.0, 0.0, 0.0, 1.0,
-		0.0, 1.0, 0.0, 2.0,
-		0.0, 0.0, 1.0, 3.0,
-		0.0, 0.0, 0.0, 1.0}
+		Xx: 1.0, Xy: 0.0, Xz: 0.0, Xw: 1.0,
+		Yx: 0.0, Yy: 1.0, Yz: 0.0, Yw: 2.0,
+		Zx: 0.0, Zy: 0.0, Zz: 1.0, Zw: 3.0,
+		Wx: 0.0, Wy: 0.0, Wz: 0.0, Ww: 1.0}
 	model := lin.NewM4()
 	model.Mult(rotate, scale)
 	model.Mult(translate, model)
 	expect := &lin.M4{
-		+0.0, +0.0, +5.0, +1.0,
-		+0.0, +5.0, +0.0, +2.0,
-		-5.0, +0.0, +0.0, +3.0,
-		+0.0, +0.0, +0.0, +1.0}
+		Xx: +0.0, Xy: +0.0, Xz: +5.0, Xw: +1.0,
+		Yx: +0.0, Yy: +5.0, Yz: +0.0, Yw: +2.0,
+		Zx: -5.0, Zy: +0.0, Zz: +0.0, Zw: +3.0,
+		Wx: +0.0, Wy: +0.0, Wz: +0.0, Ww: +1.0}
 	if !model.Aeq(expect) {
 		t.Errorf("did not match expected\n%s\n", DumpM4(expect))
 	}
